@@ -1,8 +1,30 @@
+using MediatR;
+using Microsoft.EntityFrameworkCore;
+using TodoApp.DataAccess.Context;
+using TodoApp.DataAccess.Repositories;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+builder.Logging.ClearProviders();
+builder.Logging.AddConsole();
 
 builder.Services.AddControllersWithViews();
+builder.Services.AddMediatR(typeof(StartupBase));
+
+builder.Services.AddScoped<ITodoContext, TodoContext>();
+builder.Services.AddScoped<ITodoRepository, TodoRepository>();
+
+builder.Services.AddDbContext<TodoContext>(options =>
+{
+    options.UseSqlite(sqliteOptions =>
+    {
+        var folder = Environment.SpecialFolder.LocalApplicationData;
+        var path = Environment.GetFolderPath(folder);
+        var DbPath = Path.Join(path, "todo.db");
+        options.UseSqlite($"Data Source={DbPath}");
+    });
+});
 
 var app = builder.Build();
 
