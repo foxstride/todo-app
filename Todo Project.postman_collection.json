@@ -1,0 +1,139 @@
+{
+	"info": {
+		"_postman_id": "c9c58d17-7385-4231-a8ee-68b91e9ca492",
+		"name": "Todo Project",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get Todos",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:7229/api/Todo",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "7229",
+					"path": [
+						"api",
+						"Todo"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get One Todo",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:7229/api/Todo/<GUID>",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "7229",
+					"path": [
+						"api",
+						"Todo",
+						"<GUID>"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "POST Todo",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"Title\": \"Test123\",\r\n    \"Description\": \"Test123\",\r\n    \"Finished\": false    \r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:7229/api/Todo",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "7229",
+					"path": [
+						"api",
+						"Todo"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PUT Todo",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"Title\": \"Test12345\",\r\n    \"Description\": \"Test12345\",\r\n    \"Finished\": true    \r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:7229/api/Todo/<GUID>",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "7229",
+					"path": [
+						"api",
+						"Todo",
+						"<GUID>"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DELETE Todo",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:7229/api/Todo/<GUID>",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "7229",
+					"path": [
+						"api",
+						"Todo",
+						"<GUID>"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
