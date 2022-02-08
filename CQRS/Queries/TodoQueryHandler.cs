@@ -1,25 +1,21 @@
 ﻿using MediatR;
+using TodoApp.CQRS.Base;
 using TodoApp.DataAccess.Repositories;
 using TodoApp.ViewModels;
 
 namespace TodoApp.CQRS.Queries
 {
-    public class TodoQueryHandler : IRequestHandler<TodoQuery, TodoViewModel>
+    public class TodoQueryHandler : BaseTodoHandler, IRequestHandler<TodoQuery, TodoViewModel>
     {
-        private ILogger<TodoQueryHandler> _logger { get; init; }
-        private ITodoRepository _repository { get; init; }
-
-        public TodoQueryHandler(ILogger<TodoQueryHandler> logger, ITodoRepository repository)
+        public TodoQueryHandler(ILogger<TodoQueryHandler> logger, ITodoRepository repository) : base(logger, repository)
         {
-            _logger = logger;
-            _repository = repository;
         }
 
         public async Task<TodoViewModel> Handle(TodoQuery request, CancellationToken cancellationToken)
         {
             var model = new TodoViewModel
             {
-                TodoItems = await _repository.GetTodoItems()
+                TodoItems = await _todoRepository.GetTodoItems()
             };
 
             return model;
