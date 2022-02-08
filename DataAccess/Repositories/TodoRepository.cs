@@ -1,4 +1,5 @@
-﻿using TodoApp.DataAccess.Context;
+﻿using Microsoft.EntityFrameworkCore;
+using TodoApp.DataAccess.Context;
 using TodoApp.DataAccess.Models;
 
 namespace TodoApp.DataAccess.Repositories
@@ -14,9 +15,9 @@ namespace TodoApp.DataAccess.Repositories
             _logger = logger;
         }
 
-        public async Task<List<TodoItem>> GetFinishedTodoItems()
+        public async Task<List<TodoItem>> GetTodoItems()
         {
-            throw new NotImplementedException();
+            return await _context.TodoItems.ToListAsync();
         }
 
         public async Task<TodoItem> GetTodoItem(Guid id)
@@ -24,7 +25,7 @@ namespace TodoApp.DataAccess.Repositories
             throw new NotImplementedException();
         }
 
-        public async Task<List<TodoItem>> GetTodoItems()
+        public async Task<List<TodoItem>> GetFinishedTodoItems()
         {
             throw new NotImplementedException();
         }

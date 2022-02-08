@@ -1,5 +1,6 @@
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using TodoApp.CQRS.Queries;
 using TodoApp.DataAccess.Context;
 using TodoApp.DataAccess.Repositories;
 
@@ -10,7 +11,7 @@ builder.Logging.ClearProviders();
 builder.Logging.AddConsole();
 
 builder.Services.AddControllersWithViews();
-builder.Services.AddMediatR(typeof(StartupBase));
+builder.Services.AddMediatR(typeof(TodoQuery), typeof(TodoQueryHandler));
 
 builder.Services.AddScoped<ITodoContext, TodoContext>();
 builder.Services.AddScoped<ITodoRepository, TodoRepository>();
@@ -23,6 +24,7 @@ builder.Services.AddDbContext<TodoContext>(options =>
         var path = Environment.GetFolderPath(folder);
         var DbPath = Path.Join(path, "todo.db");
         options.UseSqlite($"Data Source={DbPath}");
+        //C:\Users\%USER%\AppData\Local\todo.db
     });
 });
 

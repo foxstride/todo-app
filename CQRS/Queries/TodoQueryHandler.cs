@@ -17,7 +17,12 @@ namespace TodoApp.CQRS.Queries
 
         public async Task<TodoViewModel> Handle(TodoQuery request, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            var model = new TodoViewModel
+            {
+                TodoItems = await _repository.GetTodoItems()
+            };
+
+            return model;
         }
     }
 }
