@@ -1,5 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using MediatR;
+using Microsoft.AspNetCore.Mvc;
 using System.Net;
+using TodoApp.CQRS.Queries;
 using TodoApp.DataAccess.Models;
 using TodoApp.ViewModels;
 
@@ -12,16 +14,19 @@ namespace TodoApp.Controllers
     public class TodoController : ControllerBase
     {
         private ILogger<TodoController> _logger { get; init; }
-        public TodoController(ILogger<TodoController> logger)
+        private IMediator _mediator { get; init; }
+        public TodoController(ILogger<TodoController> logger, IMediator mediator)
         {
             _logger = logger;
+            _mediator = mediator;
         }
 
         [HttpGet]
         public async Task<TodoViewModel> Get()
         {
-            Response.StatusCode = (int)HttpStatusCode.NotFound;
-            return new TodoViewModel();
+            var request = new TodoQuery();
+            var result = await _mediator.Send(request);
+            return result;
         }
 
         [HttpGet("{id}")]

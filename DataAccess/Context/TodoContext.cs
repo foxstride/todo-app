@@ -10,7 +10,7 @@ namespace TodoApp.DataAccess.Context
             TodoItems = Set<TodoItem>();
         }
 
-        public TodoContext(DbContextOptions options)
+        public TodoContext(DbContextOptions options) : base(options)
         {
             TodoItems = Set<TodoItem>();
         }
@@ -19,25 +19,26 @@ namespace TodoApp.DataAccess.Context
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
-            if (!TodoItems.Any())
+            var timestamp = new DateTime(2022, 02, 07, 4, 30, 00);
+            var todoItems = new List<TodoItem>
             {
-                TodoItems.Add(new TodoItem() { 
+                new TodoItem()
+                {
                     Id = Guid.NewGuid(),
                     Title = "First Todo Item",
                     Description = "The First Description",
                     Finished = true,
-                });
+                },
 
-                TodoItems.Add(new TodoItem()
+                new TodoItem()
                 {
                     Id = Guid.NewGuid(),
                     Title = "Second Todo Item",
                     Description = "The Second Description",
                     Finished = false,
-                });
+                },
 
-                var timestamp = new DateTime(2022, 02, 07, 4, 30, 00);
-                TodoItems.Add(new TodoItem()
+                new TodoItem()
                 {
                     Id = Guid.NewGuid(),
                     Title = "Code Interview",
@@ -45,8 +46,10 @@ namespace TodoApp.DataAccess.Context
                     Finished = false,
                     Created = timestamp,
                     Updated = timestamp
-                });
-            }
+                }
+            };
+
+            builder.Entity<TodoItem>().HasData(todoItems);
 
             base.OnModelCreating(builder);
         }
