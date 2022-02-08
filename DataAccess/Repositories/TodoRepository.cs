@@ -20,19 +20,14 @@ namespace TodoApp.DataAccess.Repositories
             return await _context.TodoItems.ToListAsync();
         }
 
+        public async Task<List<TodoItem>> GetTodoItems(Func<TodoItem, bool> filter)
+        {
+            return _context.TodoItems.Where(filter).ToList();
+        }
+
         public async Task<TodoItem> GetTodoItem(Guid id)
         {
-            throw new NotImplementedException();
-        }
-
-        public async Task<List<TodoItem>> GetFinishedTodoItems()
-        {
-            throw new NotImplementedException();
-        }
-
-        public async Task<List<TodoItem>> GetUnfinishedTodoItems()
-        {
-            throw new NotImplementedException();
+            return await _context.TodoItems.FirstOrDefaultAsync(x => x.Id == id) ?? new TodoItem();
         }
     }
 }
