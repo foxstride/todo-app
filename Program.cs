@@ -1,5 +1,6 @@
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using TodoApp.CQRS.Commands;
 using TodoApp.CQRS.Queries;
 using TodoApp.DataAccess.Context;
 using TodoApp.DataAccess.Repositories;
@@ -11,7 +12,13 @@ builder.Logging.ClearProviders();
 builder.Logging.AddConsole();
 
 builder.Services.AddControllersWithViews();
-builder.Services.AddMediatR(typeof(TodoQuery), typeof(TodoQueryHandler));
+builder.Services.AddMediatR(typeof(SingleTodoQuery), typeof(SingleTodoQueryHandler));
+builder.Services.AddMediatR(typeof(FinishedTodoQuery), typeof(FinishedTodoQueryHandler));
+builder.Services.AddMediatR(typeof(GetAllTodoQuery), typeof(GetAllTodoQueryHandler));
+builder.Services.AddMediatR(typeof(AddTodoItemCommand), typeof(AddTodoItemHandler));
+builder.Services.AddMediatR(typeof(DeleteTodoItemCommand), typeof(DeleteTodoItemHandler));
+builder.Services.AddMediatR(typeof(UpdateTodoItemCommand), typeof(UpdateTodoItemHandler));
+
 
 builder.Services.AddScoped<ITodoContext, TodoContext>();
 builder.Services.AddScoped<ITodoRepository, TodoRepository>();

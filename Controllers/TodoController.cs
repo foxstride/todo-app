@@ -1,11 +1,10 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
+using TodoApp.CQRS.Commands;
 using TodoApp.CQRS.Queries;
 using TodoApp.DataAccess.Models;
 using TodoApp.ViewModels;
-
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace TodoApp.Controllers
 {
@@ -24,7 +23,7 @@ namespace TodoApp.Controllers
         [HttpGet]
         public async Task<TodoViewModel> Get()
         {
-            var request = new TodoQuery();
+            var request = new GetAllTodoQuery();
             var result = await _mediator.Send(request);
             return result;
         }
@@ -32,31 +31,34 @@ namespace TodoApp.Controllers
         [HttpGet("{id}")]
         public async Task<TodoViewModel> Get(Guid id)
         {
-            Response.StatusCode = (int)HttpStatusCode.NotFound;
-            return new TodoViewModel();
+            var request = new SingleTodoQuery() { Id = id };
+            var result = await _mediator.Send(request);
+            return result;
         }
 
         [HttpPost]
-        public async Task<TodoItem> Post([FromBody] TodoItem value)
+        public async Task<TodoViewModel> Post([FromBody] TodoItem value)
         {
-            Response.StatusCode = (int)HttpStatusCode.BadRequest;
-
-            return value;
+            var command = (AddTodoItemCommand)value;
+            var result = await _mediator.Send(command);
+            return result;
         }
 
         [HttpPut("{id}")]
-        public async Task<TodoItem> Put(Guid id, [FromBody] TodoItem value)
+        public async Task<TodoViewModel> Put([FromBody] TodoItem value)
         {
-
-            Response.StatusCode = (int)HttpStatusCode.NotFound;
-            return value;
+            var command = (UpdateTodoItemCommand)value;
+            var result = await _mediator.Send(command);
+            return result;
         }
 
         [HttpDelete("{id}")]
         public async Task<Guid> Delete(Guid id)
         {
-            Response.StatusCode = (int)HttpStatusCode.NotFound;
-            return id;
+            var command = new DeleteTodoItemCommand() { Id = id };
+            var result = await _mediator.Send(command);
+            
+            return result ? id : Guid.Empty;
         }
     }
 }
