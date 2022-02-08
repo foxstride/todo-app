@@ -13,7 +13,9 @@ namespace TodoApp.CQRS.Commands
 
         public async Task<TodoViewModel> Handle(AddTodoItemCommand request, CancellationToken cancellationToken)
         {
-            
+            var model = new TodoViewModel();
+            model.TodoItems.Add(await _todoRepository.AddTodoItem(request));
+            return model;
         }
     }
 }

@@ -3,7 +3,7 @@ using TodoApp.DataAccess.Models;
 
 namespace TodoApp.DataAccess.Context
 {
-    public class TodoContext : DbContext, ITodoContext
+    public class TodoContext : DbContext
     {
         public TodoContext()
         {
