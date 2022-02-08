@@ -12,7 +12,7 @@ namespace TodoApp.CQRS.Commands
 
         public async Task<bool> Handle(DeleteTodoItemCommand request, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            return await _todoRepository.DeleteTodoItem(request.Id);
         }
     }
 }

@@ -20,7 +20,7 @@ builder.Services.AddMediatR(typeof(DeleteTodoItemCommand), typeof(DeleteTodoItem
 builder.Services.AddMediatR(typeof(UpdateTodoItemCommand), typeof(UpdateTodoItemHandler));
 
 
-builder.Services.AddScoped<ITodoContext, TodoContext>();
+builder.Services.AddScoped<TodoContext, TodoContext>();
 builder.Services.AddScoped<ITodoRepository, TodoRepository>();
 
 builder.Services.AddDbContext<TodoContext>(options =>
